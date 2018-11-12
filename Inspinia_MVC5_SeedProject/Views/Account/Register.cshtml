@@ -58,36 +58,6 @@
         </div>
     </div>
 </body>
-
-<script>
-	function Logar() {
-		var usuario = {
-			'Email': $('#email-usuario').val(),
-			'Senha': $('#senha-usuario').val()
-		}
-
-		if (ValidaPreenchimento(usuario)) {
-			post('/valida', usuario, RedirecionarAHome, MensagemErro)
-		}
-		else {
-			MensagemErro('Preencha todos os campos antes de prosseguir.')
-		}
-	}
-
-	function ValidaPreenchimento(usuario) {
-		return usuario.Email && usuario.Senha
-	}
-
-	function RedirecionarAHome(retorno) {
-		window.location.href = '/principal'
-		toastr.success('Logado com sucesso!')
-	}
-
-	function MensagemErro(mensagem) {
-		toastr.error(mensagem)
-	}
-</script>
-
 </html>
 
 @section Scripts {

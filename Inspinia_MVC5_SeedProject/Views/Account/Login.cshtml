@@ -75,7 +75,7 @@
 			}
 
 			if (ValidaPreenchimento(usuario)) {
-				post('/valida', usuario, RedirecionarAHome, MensagemErro)
+				post('/api/usuario', usuario, RedirecionarAHome, MensagemErro)
 			}
 			else {
 				MensagemErro('Preencha todos os campos antes de prosseguir.')
