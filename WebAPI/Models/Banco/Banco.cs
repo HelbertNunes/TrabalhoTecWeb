@@ -27,7 +27,10 @@
 			_query.SelectExactlyOne<Usuario>("UPDATE Usuario SET Nome = @Nome, Email = @Email, Senha = @Senha WHERE Id = @Id ", new { usuario });
 
 		public static Usuario RemoveUsuario(Usuario usuario) =>
-			_query.SelectExactlyOne<Usuario>("DELETE FROM Usuario");
+			_query.SelectExactlyOne<Usuario>("DELETE FROM Usuario WHERE Id = @Id", new { usuario });
+
+		private static void InsereDieta(Dieta dieta) =>
+			_query.SelectExactlyOne("INSERT INTO Dieta Values @dieta", new { dieta });
 
     }
 }
