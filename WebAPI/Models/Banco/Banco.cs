@@ -4,7 +4,7 @@
 	using System.Collections.Generic;
 
 	public static class Banco
-    {
+	{
 		private static Query _query = new Query("Server=tcp:fitlifeserver.database.windows.net,1433;Initial Catalog=FitLifeDB;Persist Security Info=False;User ID={USUARIO};Password={SENHA};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
 		public static Alimento ObtemAlimento(Macronutrientes macronutrientes)
@@ -14,15 +14,20 @@
 				AND (Carboidrato BETWEEN @Carboidrato AND @Carboidrato + 50)", macronutrientes);
 		}
 
-		public static IEnumerable<Dieta> ObtemDietas(string idUsuario) => new List<Dieta>();
+		public static IEnumerable<Dieta> ObtemDietas(string idUsuario) =>
+			_query.Select<Dieta>("SELECT * FROM Dieta WHERE IdUsuario = @idUsuario", new { idUsuario });
 
-		public static Dieta RemoveDieta(string idDieta) => new Dieta();
+		public static Dieta RemoveDieta(string idDieta) =>
+			_query.SelectExactlyOne<Dieta>("DELETE FROM Dieta WHERE Id = @idDieta", new { idDieta });
 
-		public static Usuario ObtemUsuario(string emailUsuario) => new Usuario();
+		public static Usuario ObtemUsuario(string email) =>
+			_query.SelectExactlyOne<Usuario>("SELECT * FROM Usuario WHERE Email = @email", new { email });
 
-		public static Usuario EditaUsuario(Usuario usuario) => usuario;
+		public static Usuario EditaUsuario(Usuario usuario) =>
+			_query.SelectExactlyOne<Usuario>("UPDATE Usuario SET Nome = @Nome, Email = @Email, Senha = @Senha WHERE Id = @Id ", new { usuario });
 
-		public static Usuario RemoveUsuario(Usuario usuario) => usuario;
+		public static Usuario RemoveUsuario(Usuario usuario) =>
+			_query.SelectExactlyOne<Usuario>("DELETE FROM Usuario");
 
     }
 }
